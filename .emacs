@@ -82,7 +82,7 @@
   (let* ((emacs-directory (file-name-as-directory
                            (chemacs-emacs-profile-key 'user-emacs-directory)))
          (init-file       (expand-file-name "init.el" emacs-directory))
-         (custom-file-    (chemacs-emacs-profile-key 'custom-file init-file))
+         (custom-file-    (chemacs-emacs-profile-key 'custom-file))
          (server-name-    (chemacs-emacs-profile-key 'server-name)))
     (setq user-emacs-directory emacs-directory)
 
@@ -101,9 +101,10 @@
 
     ;; Prevent customize from changing ~/.emacs (this file), but if init.el has
     ;; set a value for custom-file then don't touch it.
-    (when (not custom-file)
-      (setq custom-file custom-file-)
-      (load custom-file))))
+    (unless custom-file
+      (when custom-file-
+        (setq custom-file custom-file-)
+        (load custom-file)))))
 
 (defun chemacs-check-command-line-args (args)
   (if args
